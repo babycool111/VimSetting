@@ -1,0 +1,134 @@
+"设置ctags，在当前目录查找tags，如果没有，向上递归
+set tags=tags;
+
+"语法高亮
+syntax on
+
+"设置tab为四个空格
+set tabstop=4
+
+"Taglist
+let Tlist_Use_Right_Window = 1
+
+"映射行号操作为F5和C-F5
+map <F5> <ESC>:set nu<CR>
+map <C-F5> <ESC>:set nonu<CR>
+
+"设置C语言的自动对齐,缩进结构
+"set cindent
+
+"设置匹配模式
+set showmatch
+
+"supertab相关
+"let g:SuperTabDefaultCompletionType="context"  
+
+"配色
+" Vim color file
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last Change:	2001 May 21
+
+" This color scheme uses a dark grey background.
+
+" First remove all existing highlighting.
+set background=dark
+hi clear
+if exists("syntax_on")
+  syntax reset
+  endif
+
+  let colors_name = "asmanian2"
+
+  hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
+
+  " Groups used in the 'highlight' and 'guicursor' options default value.
+  hi ErrorMsg term=standout ctermbg=DarkRed ctermfg=White guibg=Red guifg=White
+  hi IncSearch term=reverse cterm=reverse gui=reverse
+  hi ModeMsg term=bold cterm=bold gui=bold
+  hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
+  hi StatusLineNC term=reverse cterm=reverse gui=reverse
+  hi VertSplit term=reverse cterm=reverse gui=reverse
+  hi Visual term=reverse cterm=reverse gui=reverse guifg=Grey guibg=fg
+  hi VisualNOS term=underline,bold cterm=underline,bold gui=underline,bold
+  hi DiffText term=reverse cterm=bold ctermbg=Red gui=bold guibg=Red
+  hi Cursor guibg=Green guifg=Black
+  hi lCursor guibg=Cyan guifg=Black
+  hi Directory term=bold ctermfg=LightCyan guifg=Cyan
+  hi LineNr term=underline ctermfg=Yellow guifg=Yellow
+  hi MoreMsg term=bold ctermfg=LightGreen gui=bold guifg=SeaGreen
+  hi NonText term=bold ctermfg=LightBlue gui=bold guifg=LightBlue guibg=grey30
+  hi Question term=standout ctermfg=LightGreen gui=bold guifg=Green
+  hi Search term=reverse ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
+  hi SpecialKey term=bold ctermfg=LightBlue guifg=Cyan
+  hi Title term=bold ctermfg=LightMagenta gui=bold guifg=Magenta
+  hi WarningMsg term=standout ctermfg=LightRed guifg=Red
+  hi WildMenu term=standout ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
+  hi Folded term=standout ctermbg=grey ctermfg=DarkBlue guibg=Grey15 guifg=Grey30
+  hi FoldColumn term=standout ctermbg=Grey ctermfg=DarkBlue guibg=Grey15 guifg=Grey30
+  hi DiffAdd term=bold ctermbg=DarkBlue guibg=DarkBlue
+  hi DiffChange term=bold ctermbg=DarkMagenta guibg=DarkMagenta
+  hi DiffDelete term=bold ctermfg=Blue ctermbg=DarkCyan gui=bold guifg=Blue guibg=DarkCyan
+
+  " Groups for syntax highlighting
+  hi Constant term=underline ctermfg=Magenta guifg=#ffa0a0 
+  "guibg=grey5
+  hi Special term=bold ctermfg=LightRed guifg=Orange 
+  "guibg=grey5
+  if &t_Co > 8
+    hi Statement term=bold cterm=bold ctermfg=Yellow guifg=#ffff60 gui=bold
+	endif
+	hi Ignore ctermfg=DarkGrey guifg=grey20
+
+	" vim: sw=2
+
+" for cscope
+if has("cscope")
+	set csprg=/usr/bin/cscope
+	set csto=1
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+	endif
+	set csverb
+endif
+
+nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>i :cs find i <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+"for annotation
+set helplang=cn
+
+"let g:winManagerWindowLayout='FileExplorer|TagList'
+"nmap wm :WMToggle<CR>
+"let Tlist_File_Fold_Auto_Close=1
+"let Tlist_Use_Right_Window=1
+"let g:winManagerWidth=30
+
+" tab check
+" Convenient command to see the difference between the current buffer and the
+" " file it was loaded from, thus the changes you made.
+"command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+"		\ | wincmd p | diffthis
+"set nocompatible                        " vim defaults, not vi!
+filetype on                             " automatic file type detection
+set listchars=tab:>-,eol:$,trail:.,extends:#
+"syntax on
+au Syntax *    syn match Error /\s\+$/ | syn match Error /^\s* \t\s*/ | syn match Error /^\t* \s*/hs=e | syn match Error /\%>80v.\+/
+syn keyword cType uint ubyte ulong uint64_t uint32_t uint16_t uint8_t boolean_t int64_t int32_t int16_t int8_t u_int64_t u_int32_t u_int16_t u_int8_t
+syn keyword cOperator likely unlikely
+set noexpandtab                         " use tabs, not spaces
+""set tabstop=8                           " tabstops of 8
+"set shiftwidth=8                        " indents of 8
+"set textwidth=78                        " screen in 80 columns wide, wrap at 78
+"set autoindent smartindent              " turn on auto/smart indenting
+"set smarttab                            " make <tab> and <backspace> smarter
+"set backspace=eol,start,indent          " allow backspacing over indent, eol, & start
+"filetype plugin indent on
